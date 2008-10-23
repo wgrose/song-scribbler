@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Song Scribbler</string>
+    <string name="no_songs">No Songs Yet</string>
+    <string name="menu_insert">Add Song</string>
+    <string name="menu_delete">Delete Song</string>
+	<string name="menu_save">Save Song</string>
+    <string name="menu_view">View Song</string>
+    <string name="title">Title</string>
+    <string name="body">Song</string>
+    <string name="edit_song">Edit Song</string>
+    <string name="menu_scroll_start">Start</string>
+    <string name="menu_scroll_stop">Stop</string>
+    <string name="menu_scroll_reset">Reset</string>
+    <string name="scroll_speed">Scroll Speed</string>
+    <string name="scroll_speed_prompt">Choose speed</string>
+</resources>
