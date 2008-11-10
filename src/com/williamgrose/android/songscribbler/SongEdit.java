@@ -28,6 +28,7 @@ public class SongEdit extends Activity {
 
     private EditText mTitleText;
     private EditText mBodyText;
+    private EditText mChordsText;
     private int scrollspeed;
     private Long mRowId;
     private SongScribblerDbAdapter mDbHelper;
@@ -43,10 +44,10 @@ public class SongEdit extends Activity {
         mDbHelper = new SongScribblerDbAdapter(this);
         mDbHelper.open();
         setContentView(R.layout.song_edit);
-
-
+        
         mTitleText = (EditText) findViewById(R.id.title);
         mBodyText = (EditText) findViewById(R.id.body);
+        mChordsText = (EditText) findViewById(R.id.chords);
         
         mRowId = savedInstanceState != null ? savedInstanceState.getLong(SongScribblerDbAdapter.KEY_ROWID)
                                                                         : null;
@@ -68,6 +69,8 @@ public class SongEdit extends Activity {
                     song.getColumnIndexOrThrow(SongScribblerDbAdapter.KEY_TITLE)));
             mBodyText.setText(song.getString(
                     song.getColumnIndexOrThrow(SongScribblerDbAdapter.KEY_BODY)));
+            mChordsText.setText(song.getString(
+                    song.getColumnIndexOrThrow(SongScribblerDbAdapter.KEY_CHORDS)));
             scrollspeed = song.getInt(
                     song.getColumnIndexOrThrow(SongScribblerDbAdapter.KEY_SCROLLSPEED));
         }
@@ -123,14 +126,15 @@ public class SongEdit extends Activity {
     private void saveState() {
         String title = mTitleText.getText().toString();
         String body = mBodyText.getText().toString();
-
+        String chords = mChordsText.getText().toString();
+        
         if (mRowId == null) {
-            long id = mDbHelper.createSong(title, body, SongScribblerDbAdapter.DEFAULT_SCROLLSPEED);
+            long id = mDbHelper.createSong(title, body, chords, SongScribblerDbAdapter.DEFAULT_SCROLLSPEED);
             if (id > 0) {
                 mRowId = id;
             }
         } else {
-            mDbHelper.updateSong(mRowId, title, body, scrollspeed);
+            mDbHelper.updateSong(mRowId, title, body, chords, scrollspeed);
         }
     }
 

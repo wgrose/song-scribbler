@@ -29,7 +29,7 @@ import android.widget.SimpleCursorAdapter;
 public class SongScribbler extends ListActivity {
     private static final int ACTIVITY_CREATE=0;
     private static final int ACTIVITY_EDIT=1;
-    
+
 
     private static final int INSERT_ID = Menu.FIRST;
     private static final int DELETE_ID = Menu.FIRST + 1;
@@ -41,6 +41,8 @@ public class SongScribbler extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.songs_list);
+        //ListView od = (ListView)findViewById(android.R.id.list);
+        //od.setDividerHeight(15); 
         mDbHelper = new SongScribblerDbAdapter(this);
         mDbHelper.open();
         fillData();
@@ -81,15 +83,15 @@ public class SongScribbler extends ListActivity {
             fillData();
             return true;
         }
-
+ 
         return super.onMenuItemSelected(featureId, item);
     }
 
     private void createSong() {
         Intent i = new Intent(this, SongEdit.class);
         startActivityForResult(i, ACTIVITY_CREATE);
-    }   
-    
+    }
+
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {

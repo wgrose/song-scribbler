@@ -38,8 +38,10 @@ public class SongScribblerDbAdapter {
 
     public static final String KEY_TITLE = "title";
     public static final String KEY_BODY = "body";
+    public static final String KEY_CHORDS = "chords";    
     public static final String KEY_SCROLLSPEED = "scrollspeed";
     public static final String KEY_ROWID = "_id";
+    
     public static final int DEFAULT_SCROLLSPEED = 2;
     
 
@@ -52,12 +54,13 @@ public class SongScribblerDbAdapter {
      */
     private static final String DATABASE_CREATE =
             "create table songs (_id integer primary key autoincrement, "
-                    + KEY_TITLE+" text not null, "+KEY_BODY+" text not null,"
-                    + KEY_SCROLLSPEED+" integer not null);";
+                    + KEY_TITLE +" text not null, " + KEY_BODY + " text not null,"
+                    + KEY_CHORDS +" text not null,"
+                    + KEY_SCROLLSPEED +" integer not null);";
 
     private static final String DATABASE_NAME = "song_scribbler";
     private static final String DATABASE_TABLE = "songs";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     private final Context mCtx;
 
@@ -121,10 +124,11 @@ public class SongScribblerDbAdapter {
      * @param body the body of the song
      * @return rowId or -1 if failed
      */
-    public long createSong(String title, String body, int scrollspeed  ) {
+    public long createSong(String title, String body, String chords, int scrollspeed  ) {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_TITLE, title);
         initialValues.put(KEY_BODY, body);
+        initialValues.put(KEY_CHORDS, chords);
         initialValues.put(KEY_SCROLLSPEED, scrollspeed);
 
         return mDb.insert(DATABASE_TABLE, null, initialValues);
@@ -147,9 +151,8 @@ public class SongScribblerDbAdapter {
      * @return Cursor over all songs
      */
     public Cursor fetchAllSongs() {
-
         return mDb.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_TITLE,
-                KEY_BODY, KEY_SCROLLSPEED}, null, null, null, null, null);
+                KEY_BODY, KEY_CHORDS, KEY_SCROLLSPEED}, null, null, null, null, null);
     }
 
     /**
@@ -164,7 +167,7 @@ public class SongScribblerDbAdapter {
         Cursor mCursor =
 
                 mDb.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-                        KEY_TITLE, KEY_BODY,KEY_SCROLLSPEED}, KEY_ROWID + "=" + rowId, null,
+                        KEY_TITLE, KEY_BODY, KEY_CHORDS, KEY_SCROLLSPEED}, KEY_ROWID + "=" + rowId, null,
                         null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
@@ -183,10 +186,11 @@ public class SongScribblerDbAdapter {
      * @param body value to set song body to
      * @return true if the song was successfully updated, false otherwise
      */
-    public boolean updateSong(long rowId, String title, String body, int scrollspeed) {
+    public boolean updateSong(long rowId, String title, String body, String chords, int scrollspeed) {
         ContentValues args = new ContentValues();
         args.put(KEY_TITLE, title);
         args.put(KEY_BODY, body);
+        args.put(KEY_CHORDS, chords);
         args.put(KEY_SCROLLSPEED, scrollspeed);
 
         return mDb.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;

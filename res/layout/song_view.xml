@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
-	<TextView android:layout_width="fill_parent"
-		android:layout_height="wrap_content" 
-		android:id="@+id/scroll_body"
-		android:layout_weight="1"
-		android:gravity="top"
-		android:scrollbars="vertical"/>
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="horizontal" android:layout_width="fill_parent"
-	android:layout_height="wrap_content">
-		<TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/scroll_speed"
-	    />
-	    <Spinner android:id="@+id/scroll_speed"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:drawSelectorOnTop="true"
-	        android:prompt="@string/scroll_speed_prompt"
-	    />
-	</LinearLayout>    
+		android:orientation="horizontal" android:layout_width="fill_parent"
+        android:layout_height="40px" android:gravity="left">            
+        <TextView android:layout_width="wrap_content" android:id="@+id/scroll_chords"
+			android:gravity="top" android:scrollbars="vertical" 
+			android:layout_height="40px" android:layout_weight="1"/>    
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        	android:orientation="horizontal" android:layout_width="wrap_content"
+        	android:layout_height="wrap_content" android:gravity="right">
+			<TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/scroll_speed" android:layout_gravity="center_vertical"/>
+            <Spinner android:id="@+id/scroll_speed" android:drawSelectorOnTop="true"
+                android:prompt="@string/scroll_speed_prompt" android:layout_width="100px" 
+                android:layout_height="45px"/>
+		</LinearLayout>
+	</LinearLayout>
+	<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:id="@+id/scroll_body" android:layout_weight="1"
+		android:gravity="top" android:scrollbars="vertical"/>
 </LinearLayout>

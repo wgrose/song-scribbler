@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Song Scribbler</string>
-    <string name="no_songs">No Songs Yet</string>
+    <string name="activity_list_name">Song Scribbler</string>
+    <string name="activity_edit_name">Song Scribbler > Edit Song</string>
+    <string name="activity_view_name">Song Scribbler > Edit Song > View Song</string>
+    <string name="no_songs">No Songs Yet!</string>
     <string name="menu_insert">Add Song</string>
     <string name="menu_delete">Delete Song</string>
 	<string name="menu_save">Save Song</string>
     <string name="menu_view">View Song</string>
     <string name="title">Title</string>
     <string name="body">Song</string>
+    <string name="chords">Chords</string>
     <string name="edit_song">Edit Song</string>
     <string name="menu_scroll_start">Start</string>
     <string name="menu_scroll_stop">Stop</string>
