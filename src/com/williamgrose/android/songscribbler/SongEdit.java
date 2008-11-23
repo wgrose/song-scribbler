@@ -16,8 +16,9 @@ public class SongEdit extends Activity {
     private int scrollspeed;
     private Long mRowId;
     private SongScribblerDbAdapter mDbHelper;
-    
-    
+    private boolean hasSavedInstanceState = false;
+
+
     private static final int ACTIVITY_VIEW=2;
     private static final int SAVE_ID = Menu.FIRST;
     private static final int VIEW_ID = Menu.FIRST+1;
@@ -28,13 +29,15 @@ public class SongEdit extends Activity {
         mDbHelper = new SongScribblerDbAdapter(this);
         mDbHelper.open();
         setContentView(R.layout.song_edit);
-        
+
         mTitleText = (EditText) findViewById(R.id.title);
         mBodyText = (EditText) findViewById(R.id.body);
         mChordsText = (EditText) findViewById(R.id.chords);
-        
-        mRowId = savedInstanceState != null ? savedInstanceState.getLong(SongScribblerDbAdapter.KEY_ROWID)
-                                                                        : null;
+
+        mRowId = (savedInstanceState != null && 
+        		savedInstanceState.containsKey(SongScribblerDbAdapter.KEY_ROWID)) ? 
+        		savedInstanceState.getLong(SongScribblerDbAdapter.KEY_ROWID)
+        		:null;
         if (mRowId == null) {
                 Bundle extras = getIntent().getExtras();
                 mRowId = extras != null ? extras.getLong(SongScribblerDbAdapter.KEY_ROWID)
@@ -62,14 +65,20 @@ public class SongEdit extends Activity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+    	hasSavedInstanceState = true;
+    	saveState();
+    	if(mRowId != null){
+    		outState.putLong(SongScribblerDbAdapter.KEY_ROWID, mRowId);
+    	}
         super.onSaveInstanceState(outState);
-        outState.putLong(SongScribblerDbAdapter.KEY_ROWID, mRowId);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        saveState();
+        if(!hasSavedInstanceState){
+        	saveState();
+        }
     }
 
     @Override
@@ -77,7 +86,7 @@ public class SongEdit extends Activity {
         super.onResume();
         populateFields();
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -85,7 +94,7 @@ public class SongEdit extends Activity {
         menu.add(0, VIEW_ID, 0,  R.string.menu_view);
         return true;
     }
-    
+
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         switch(item.getItemId()) {
@@ -99,9 +108,9 @@ public class SongEdit extends Activity {
         }
         return super.onMenuItemSelected(featureId, item);
     }
-    
+
     private void viewSong() {
-    	saveState();
+        saveState();
         Intent i = new Intent(this, SongView.class);
         i.putExtra(SongScribblerDbAdapter.KEY_ROWID, mRowId);
         startActivityForResult(i, ACTIVITY_VIEW);
@@ -111,12 +120,18 @@ public class SongEdit extends Activity {
         String title = mTitleText.getText().toString();
         String body = mBodyText.getText().toString();
         String chords = mChordsText.getText().toString();
-        
+
         if (mRowId == null) {
-            long id = mDbHelper.createSong(title, body, chords, SongScribblerDbAdapter.DEFAULT_SCROLLSPEED);
-            if (id > 0) {
-                mRowId = id;
-            }
+        	if((title.length() > 0)
+        			|| (body.length() > 0)
+        			|| (chords.length() > 0)){
+        		long id = mDbHelper.createSong(title, body,
+        				chords, SongScribblerDbAdapter.DEFAULT_SCROLLSPEED);
+        		
+        		if (id > 0) {
+        			mRowId = id;
+        		}
+        	}
         } else {
             mDbHelper.updateSong(mRowId, title, body, chords, scrollspeed);
         }
