@@ -5,7 +5,7 @@
     android:versionName="1">
 	
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <application android:icon="@drawable/icon" android:name="SongScribbler">
+    <application android:icon="@drawable/icon" android:label="@string/activity_list_name">
         <activity android:name=".SongScribbler" android:label="@string/activity_list_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
