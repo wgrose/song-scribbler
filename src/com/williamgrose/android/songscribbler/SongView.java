@@ -2,12 +2,13 @@ package com.williamgrose.android.songscribbler;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PowerManager;
 import android.text.Layout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +35,7 @@ public class SongView extends Activity {
         
         @Override
         public void run() {
-        	Log.i(this.getClass().getName(), "Running Thread mRun:"+mRun);
+        	//Log.i(this.getClass().getName(), "Running Thread mRun:"+mRun);
         	while(mRun){
         		doSleep();
         		tick();
@@ -86,6 +87,9 @@ public class SongView extends Activity {
     private static final int START_ID = Menu.FIRST;
     private static final int STOP_ID = Menu.FIRST+1;
     private static final int RESET_ID = Menu.FIRST+2;
+    
+	private PowerManager pm;
+	private PowerManager.WakeLock wl; 
     
     
     
@@ -158,11 +162,13 @@ public class SongView extends Activity {
     private void startScrolling(){
     	li("Start Scrolling");
         startThread();
+        aquireWakeLock();
     }
     
     private void stopScrolling(){
     	li("Stop Scrolling");
     	stopThread();
+    	releaseWakeLock();
     }
     
     private void resetScrolling(){
@@ -222,6 +228,7 @@ public class SongView extends Activity {
         saveState();
         li("onPause Called");
         stopThread();
+        releaseWakeLock();
     }
     
     @Override
@@ -265,8 +272,27 @@ public class SongView extends Activity {
     }
     
     private void li(String mesg){
-		Log.i(this.getClass().getName(), mesg);
+//		Log.i(this.getClass().getName(), mesg);
     }
 
+    private void createWakeLock() {
+    	if(pm == null){
+    		pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+    		wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "SongScribbler Wake Lock");
+    	}
+    }
+    
+    private void aquireWakeLock(){
+    	createWakeLock();
+    	if(wl != null){
+    		wl.acquire();
+    	}
+    }
+    
+    private void releaseWakeLock(){
+    	if(wl != null){
+    		wl.release();	
+    	}
+    }
 
 }

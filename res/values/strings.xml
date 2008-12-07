@@ -8,9 +8,9 @@
     <string name="menu_delete">Delete Song</string>
 	<string name="menu_save">Save Song</string>
     <string name="menu_view">View Song</string>
-    <string name="title">Title</string>
-    <string name="body">Song</string>
-    <string name="chords">Chords</string>
+    <string name="edit_title">Title...</string>
+    <string name="edit_chords">Chords...</string>
+    <string name="edit_body">Lyrics...</string>
     <string name="edit_song">Edit Song</string>
     <string name="menu_scroll_start">Start</string>
     <string name="menu_scroll_stop">Stop</string>

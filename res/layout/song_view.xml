@@ -7,6 +7,7 @@
         android:layout_height="40px" android:gravity="left">            
         <TextView android:layout_width="wrap_content" android:id="@+id/scroll_chords"
 			android:gravity="top" android:scrollbars="vertical" 
+			android:textColor="#fff"
 			android:layout_height="40px" android:layout_weight="1"/>    
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         	android:orientation="horizontal" android:layout_width="wrap_content"
@@ -14,13 +15,17 @@
 			<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/scroll_speed" android:layout_gravity="center_vertical"/>
+                android:textColor="#fff"
+                android:text="@string/scroll_speed" android:layout_gravity="center_vertical" android:enabled="false"/>
             <Spinner android:id="@+id/scroll_speed" android:drawSelectorOnTop="true"
                 android:prompt="@string/scroll_speed_prompt" android:layout_width="100px" 
                 android:layout_height="45px"/>
 		</LinearLayout>
 	</LinearLayout>
 	<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:textColor="#fff"
+		android:textSize="16sp"
 		android:id="@+id/scroll_body" android:layout_weight="1"
+		
 		android:gravity="top" android:scrollbars="vertical"/>
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 
 public class SongEdit extends Activity {
@@ -29,10 +30,11 @@ public class SongEdit extends Activity {
         mDbHelper = new SongScribblerDbAdapter(this);
         mDbHelper.open();
         setContentView(R.layout.song_edit);
-
+        
         mTitleText = (EditText) findViewById(R.id.title);
         mBodyText = (EditText) findViewById(R.id.body);
         mChordsText = (EditText) findViewById(R.id.chords);
+
 
         mRowId = (savedInstanceState != null && 
         		savedInstanceState.containsKey(SongScribblerDbAdapter.KEY_ROWID)) ? 
@@ -40,13 +42,43 @@ public class SongEdit extends Activity {
         		:null;
         if (mRowId == null) {
                 Bundle extras = getIntent().getExtras();
-                mRowId = extras != null ? extras.getLong(SongScribblerDbAdapter.KEY_ROWID)
-                                                                : null;
+                mRowId = extras != null ? 
+                		extras.getLong(SongScribblerDbAdapter.KEY_ROWID)
+                		: null;
         }
 
         populateFields();
-
+        
+        mTitleText.setOnFocusChangeListener(editTextListener);
+        mChordsText.setOnFocusChangeListener(editTextListener);
+        mBodyText.setOnFocusChangeListener(editTextListener);
+	
     }
+    
+    private EditText.OnFocusChangeListener editTextListener =
+        new EditText.OnFocusChangeListener() {
+    	
+    		public void onFocusChange(View view, boolean isFocused) {
+    			if(isFocused == true){
+     				if((view == mTitleText) 
+     						&& (mTitleText.getText().toString().equals(
+     								getString(R.string.edit_title)))){
+     					mTitleText.selectAll();
+    				}
+     				if((view == mChordsText) 
+     						&& (mChordsText.getText().toString().equals(
+     								getString(R.string.edit_chords)))){
+     					mChordsText.selectAll();
+    				}
+     				if((view == mBodyText) 
+     						&& (mBodyText.getText().toString().equals(
+     								getString(R.string.edit_body)))){
+     					mBodyText.selectAll();
+    				}
+    			}
+    		}
+    	};
+     
 
     private void populateFields() {
         if (mRowId != null) {
@@ -120,20 +152,20 @@ public class SongEdit extends Activity {
         String title = mTitleText.getText().toString();
         String body = mBodyText.getText().toString();
         String chords = mChordsText.getText().toString();
-
-        if (mRowId == null) {
-        	if((title.length() > 0)
-        			|| (body.length() > 0)
-        			|| (chords.length() > 0)){
-        		long id = mDbHelper.createSong(title, body,
-        				chords, SongScribblerDbAdapter.DEFAULT_SCROLLSPEED);
-        		
-        		if (id > 0) {
-        			mRowId = id;
-        		}
-        	}
-        } else {
-            mDbHelper.updateSong(mRowId, title, body, chords, scrollspeed);
+        Boolean isSongEdited = !(title.equals(getString(R.string.edit_title))
+				&& body.equals(getString(R.string.edit_body))
+				&& chords.equals(getString(R.string.edit_chords))
+				);
+        if(isSongEdited){
+	        if (mRowId == null) {
+	    		long id = mDbHelper.createSong(title, body,
+					chords, SongScribblerDbAdapter.DEFAULT_SCROLLSPEED);    		
+	    		if (id > 0) {
+	    			mRowId = id;
+	    		}
+	        } else {
+	            mDbHelper.updateSong(mRowId, title, body, chords, scrollspeed);
+	        }
         }
     }
 
