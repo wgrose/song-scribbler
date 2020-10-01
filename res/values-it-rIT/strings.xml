@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="activity_list_name">Canzone Scribbler</string>
+    <string name="activity_edit_name">Canzone Scribbler > Modifica Canzone</string>
+    <string name="activity_view_name">Canzone Scribbler > Modifica Canzone > Vedi Canzone</string>
+    <string name="no_Canzones">Ancora nessuna Canzone presente!</string>
+    <string name="menu_insert">Aggiungi una Canzone</string>
+    <string name="menu_delete">Cancella una Canzone</string>
+	<string name="menu_save">Salva Canzone</string>
+    <string name="menu_view">Vedi Canzone</string>
+    <string name="edit_title">Titolo...</string>
+    <string name="edit_chords">Accordi...</string>
+    <string name="edit_body">Test...</string>
+    <string name="edit_Canzone">Modifica Canzone</string>
+    <string name="menu_scroll_start">Start</string>
+    <string name="menu_scroll_stop">Stop</string>
+    <string name="menu_scroll_reset">Reset</string>
+    <string name="scroll_speed">Velocità di scorrimento</string>
+    <string name="scroll_speed_prompt">Scegli Velocità</string>
+</resources>
