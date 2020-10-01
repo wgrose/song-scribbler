@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="activity_list_name">Canzone Scribbler</string>
-    <string name="activity_edit_name">Canzone Scribbler > Modifica Canzone</string>
-    <string name="activity_view_name">Canzone Scribbler > Modifica Canzone > Vedi Canzone</string>
+    <string name="activity_list_name">Song Scribbler</string>
+    <string name="activity_edit_name">Song Scribbler > Modifica Canzone</string>
+    <string name="activity_view_name">Song Scribbler > Modifica Canzone > Vedi Canzone</string>
     <string name="no_Canzones">Ancora nessuna Canzone presente!</string>
     <string name="menu_insert">Aggiungi una Canzone</string>
     <string name="menu_delete">Cancella una Canzone</string>
